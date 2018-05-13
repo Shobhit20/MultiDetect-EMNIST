@@ -25,14 +25,14 @@ NOTE - The weights file is already present in the output folder. One can directl
 Following are a few results obtained after training the model 
 
 Canny edge detection - 
-<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/tree/master/Imgs/Canny.png" width="800">
+<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/Canny.png" width="800">
 
 Dilation
-<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/tree/master/Imgs/Dilate.png" width="800">
+<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/tree/master/Imgs/dilate.png" width="800">
 
 Bounding box
-<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/tree/master/Imgs/BB.png" width="800">
+<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/BB.png" width="800">
 
 Tested on multiple files
-<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/tree/master/output/Imgs.png" width="400">
+<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/Result.png" width="400">
 
