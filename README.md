@@ -27,7 +27,7 @@ Following are a few results obtained after training the model
 Canny edge detection - 
 <img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/Canny.png" width="800">
 
-Dilation
+Dilation operator
 <img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/dilate.png" width="800">
 
 Bounding box
