@@ -28,11 +28,11 @@ Canny edge detection -
 <img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/Canny.png" width="800">
 
 Dilation
-<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/tree/master/Imgs/dilate.png" width="800">
+<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/dilate.png" width="800">
 
 Bounding box
 <img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/BB.png" width="800">
 
 Tested on multiple files
-<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/Result.png" width="400">
+<img src="https://github.com/Shobhit20/MultiDetect-EMNIST/blob/master/Imgs/Result.png" width="800">
 
