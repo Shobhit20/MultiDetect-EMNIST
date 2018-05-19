@@ -9,6 +9,8 @@ img = cv2.imread(str(sys.argv[1]), 0)
 
 edges = cv2.Canny(img,50,50)
 #cv2.imshow("Nae", edges)
+
+
 '''plt.subplot(121),plt.imshow(img,cmap = 'gray')
 plt.title('Original Image'), plt.xticks([]), plt.yticks([])
 plt.subplot(122),plt.imshow(edges,cmap = 'gray')
@@ -17,8 +19,9 @@ plt.show()
 '''
 
 im = cv2.dilate(edges, cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5, 5)), iterations=2)
-
-im2, contours, hierarchy = cv2.findContours(im,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+cv2.imshow("Nae", im)
+cv2.waitKey()
+contours, hierarchy = cv2.findContours(im, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 #im = cv2.drawContours(im, contours, -1, (120,120,120), 6)
 arr = []
 i=0
@@ -46,12 +49,13 @@ for i in range(len(arr)):
 print arrnew
 
 
-		
+
 for i in range(len(arrnew)):
 	
 					x, y, w, h = arrnew[i]	
 					k+=1
 					string = "roi"+str(k)+".jpg"
+					print im
 					roi = im[y-int(w/10):y+h+int(w/10), x-int(w/10):x+w+int(w/10)]
 		
 					cv2.imwrite(string, roi)
