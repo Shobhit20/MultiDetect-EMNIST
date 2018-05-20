@@ -41,7 +41,7 @@ model5.add(Dense(num_classes))
 model5.add(BatchNormalization())
 model5.add(Activation("softmax"))
 print model5.summary()
-# model5 the model
+
 adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=1e-6, amsgrad=False)
 model5.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 

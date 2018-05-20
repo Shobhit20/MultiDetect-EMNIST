@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from keras.utils import np_utils
 
-train_db = pd.read_csv("emnist-balanced-train.csv",header=None)
-test = pd.read_csv("emnist-balanced-test.csv",header=None)
+train_db = pd.read_csv("data/emnist-bymerge-train.csv",header=None)
+test = pd.read_csv("data/emnist-bymerge-test.csv",header=None)
 y_train = train_db.iloc[:,0]
 y_train = np_utils.to_categorical(y_train, 47)
 y_test = test.iloc[:,0]
@@ -36,16 +36,26 @@ x_test /=255
 print ("x_train:",x_train.shape)
 	
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
-	         activation='relu',
-	         input_shape=(28, 28, 1)))
-model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(32, 3, 3, border_mode='valid', input_shape=(28, 28, 1)))
+model.add(BatchNormalization())
 model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Activation("relu"))
+model.add(Conv2D(32, 3, 3,  border_mode='valid'))
 model.add(Dropout(0.25))
+model.add(BatchNormalization())
+model.add(Activation("relu"))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.3))
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(47, activation='softmax'))
+model.add(Dense(1024, activation='relu'))
+model.add(BatchNormalization())
+model.add(Dropout(0.4))
+model.add(Dense(256, activation='relu'))
+model.add(BatchNormalization())
+model.add(Dropout(0.4))
+model.add(Dense(47))
+model.add(BatchNormalization())
+model.add(Activation("softmax"))
 
 print model.summary()
 
