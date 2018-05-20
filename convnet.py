@@ -3,7 +3,7 @@ import pandas as pd
 
 from keras.callbacks import TensorBoard
 from keras.models import Sequential, Model
-from keras.layers import Dense,Dropout,Flatten,Conv2D,MaxPooling2D, Input, Conv3D
+from keras.layers import Dense,Dropout,Flatten,Conv2D,MaxPooling2D, Input, BatchNormalization, Activation
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
@@ -59,23 +59,20 @@ model.add(Activation("softmax"))
 
 print model.summary()
 
+adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=1e-6, amsgrad=False)
+model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.Adadelta(),
-              metrics=['accuracy'])
+model_info = model.fit(x_train, y_train, batch_size=128, \
+                         nb_epoch=50, verbose=1, validation_split=0.2)
 
-
-model.fit(x_train, y_train,
-          batch_size=128,
-          epochs=70,
-          verbose=1)
 model.save('output/Model.h5', overwrite=True)
 model.save_weights('output/Weights.h5',overwrite=True)
-'''
-score = model.evaluate(x_test, y_test, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
-'''
+result = model5.predict(x_test)
+predicted_class = np.argmax(result, axis=1)
+true_class = np.argmax(y_test, axis=1)
+num_correct = np.sum(predicted_class == true_class) 
+accuracy = float(num_correct)/result.shape[0]
+print (accuracy * 100)
 
 
 
