@@ -4,7 +4,7 @@ import pandas as pd
 from keras.callbacks import TensorBoard
 from keras.models import Sequential, Model
 from keras.layers import Dense,Dropout,Flatten,Conv2D,MaxPooling2D, Input, BatchNormalization, Activation
-from keras.optimizers import Adam
+from keras import optimizers
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 import pandas as pd
@@ -19,7 +19,7 @@ test = pd.read_csv("data/emnist-bymerge-test.csv",header=None)
 y_train = train_db.iloc[:,0]
 y_train = np_utils.to_categorical(y_train, 47)
 y_test = test.iloc[:,0]
-
+y_test = np_utils.to_categorical(y_test, 47)
 print ("y_train:", y_train.shape)
 	
 
@@ -29,7 +29,8 @@ x_train = np.asarray(x_train)
 x_test = np.asarray(x_test)
 x_train = x_train.reshape(x_train.shape[0], 28, 28,1).astype('float32')
 x_test = x_test.reshape(x_test.shape[0], 28, 28,1).astype('float32')
-
+print x_train[0]
+print x_test[0]
 x_train /= 255
 x_test /=255
 
@@ -50,7 +51,7 @@ model.add(Flatten())
 model.add(Dense(1024, activation='relu'))
 model.add(BatchNormalization())
 model.add(Dropout(0.4))
-model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(BatchNormalization())
 model.add(Dropout(0.4))
 model.add(Dense(47))
@@ -67,7 +68,7 @@ model_info = model.fit(x_train, y_train, batch_size=128, \
 
 model.save('output/Model.h5', overwrite=True)
 model.save_weights('output/Weights.h5',overwrite=True)
-result = model5.predict(x_test)
+result = model.predict(x_test)
 predicted_class = np.argmax(result, axis=1)
 true_class = np.argmax(y_test, axis=1)
 num_correct = np.sum(predicted_class == true_class) 
