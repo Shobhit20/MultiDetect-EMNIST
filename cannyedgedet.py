@@ -21,7 +21,7 @@ plt.show()
 im = cv2.dilate(edges, cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(5, 5)), iterations=2)
 
 new_img = copy.deepcopy(im)
-contours, hierarchy = cv2.findContours(new_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+_,contours, hierarchy = cv2.findContours(new_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 #im = cv2.drawContours(im, contours, -1, (120,120,120), 6)
 
 arr = []
@@ -46,7 +46,7 @@ for i in range(len(arr)):
 			k+=1
 	if k == 0:
 		arrnew.append(arr[i])
-print arrnew
+print(arrnew)
 
 
 
@@ -61,7 +61,7 @@ for i in range(len(arrnew)):
 					#cv2.imshow("Name", im)
 					cv2.imwrite("roi.jpg", roi)
 					test.testing(model)
-cv2.waitKey(0)
+# cv2.waitKey(0)
 	
 
 

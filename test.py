@@ -1,10 +1,11 @@
 from keras.callbacks import TensorBoard
 from keras.models import Sequential, Model
-from keras.layers import Dense,Dropout,Flatten,Conv2D,MaxPooling2D, Input, Conv3D
+from keras.layers import Dense,Dropout,Flatten,Conv2D,MaxPooling2D, Input, Conv3D,BatchNormalization, Activation
 from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
 from keras.preprocessing import image
+from keras import optimizers
 import keras
 import pandas as pd
 import cv2
@@ -43,23 +44,49 @@ def export_model(saver, model, input_node_names, output_node_name):
 
 
 def model():
-	model = Sequential()
-	model.add(Conv2D(32, kernel_size=(3, 3),
-			 activation='relu',
-			 input_shape=(28, 28, 1)))
-	model.add(Conv2D(64, (3, 3), activation='relu'))
-	model.add(MaxPooling2D(pool_size=(2, 2)))
-	model.add(Dropout(0.25))
-	model.add(Flatten())
-	model.add(Dense(128, activation='relu'))
-	model.add(Dropout(0.5))
-	model.add(Dense(47, activation='softmax'))
+	# model = Sequential()
+	# model.add(Conv2D(32, kernel_size=(3, 3),
+	# 		 activation='relu',
+	# 		 input_shape=(28, 28, 1)))
+	# model.add(Conv2D(64, (3, 3), activation='relu'))
+	# model.add(MaxPooling2D(pool_size=(2, 2)))
+	# model.add(Dropout(0.25))
+	# model.add(Flatten())
+	# model.add(Dense(128, activation='relu'))
+	# model.add(Dropout(0.5))
+	# model.add(Dense(47, activation='softmax'))
 
-	model.compile(loss=keras.losses.categorical_crossentropy,
-		      optimizer=keras.optimizers.Adadelta(),
-		      metrics=['accuracy'])
+	# model.compile(loss=keras.losses.categorical_crossentropy,
+	# 	      optimizer=keras.optimizers.Adadelta(),
+	# 	      metrics=['accuracy'])
+
+	model = Sequential()
+	model.add(Conv2D(32, 3, 3, border_mode='valid', input_shape=(28, 28, 1)))
+	model.add(BatchNormalization())
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Activation("relu"))
+	model.add(Conv2D(32, 3, 3,  border_mode='valid'))
+	model.add(Dropout(0.25))
+	model.add(BatchNormalization())
+	model.add(Activation("relu"))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.3))
+	model.add(Flatten())
+	model.add(Dense(1024, activation='relu'))
+	model.add(BatchNormalization())
+	model.add(Dropout(0.4))
+	model.add(Dense(128, activation='relu'))
+	model.add(BatchNormalization())
+	model.add(Dropout(0.4))
+	model.add(Dense(47))
+	model.add(BatchNormalization())
+	model.add(Activation("softmax"))
+
+	adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=1e-6, amsgrad=False)
+	model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
+
 	model.load_weights("output/Weights.h5")
-	print model.summary
+	# print model.summary
 	return model
 
 
@@ -80,7 +107,7 @@ def testing(model):
 	x /= 255
 	out = model.predict(x)
 	
-	print dictionary[np.argmax(out)]
+	print(dictionary[np.argmax(out)])
 
 if __name__=="__main__":
 	model = model()
